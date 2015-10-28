@@ -14,9 +14,12 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioSpectrumListener;
 import javafx.scene.media.Media;
@@ -44,7 +47,7 @@ public class MoviePlayer extends Application{
         stage.setTitle("Movie Player"); 
         Group root = new Group(); 
         
-        Media media = new Media("file:///Users/Sunny/Desktop/Stage/NetbeansProjects/MoviePlayer/trailers/tattoo.mp4");
+        Media media = new Media("file:///Users/Sunny/Desktop/Stage/NetbeansProjects/SmartClothing/MoviePlayer/trailers/tattoo.mp4");
         final MediaPlayer player = new MediaPlayer(media);
         MediaView view = new MediaView(player); 
                 
@@ -67,6 +70,14 @@ public class MoviePlayer extends Application{
         final Slider slider = new Slider();
         vbox.getChildren().add(slider);
         
+        final Button pause = new Button();
+        final Button play = new Button();
+        
+        Pane pane = new Pane();
+        pane.setStyle("-fx-background-color: black;"); 
+        pane.getChildren().add(play);
+        pane.getChildren().add(pause); 
+       
         final HBox hbox = new HBox(2);
         final int bands = player.getAudioSpectrumNumBands();
         final Rectangle[] rects = new Rectangle[bands];
@@ -78,7 +89,10 @@ public class MoviePlayer extends Application{
         vbox.getChildren().add(hbox);
         
         root.getChildren().add(view); 
-        root.getChildren().add(vbox);
+        root.getChildren().add(pane);
+//        root.getChildren().add(vbox);
+                
+        root.getChildren().add(pause);
         
         Scene scene = new Scene(root, 400, 400, Color.BLACK);
         stage.setScene(scene);
@@ -99,9 +113,13 @@ public class MoviePlayer extends Application{
                    r.setHeight(2);
                }
                
-               stage.setMinWidth(w);
-               stage.setMinHeight(h);
+               //stage.setMinWidth(w);
+               //stage.setMinHeight(h);
+               stage.setWidth(w);
+               stage.setHeight(h);
                
+               player.getMedia();
+                             
                vbox.setMinSize(w, 100);
                vbox.setTranslateY(h - 100);
                
@@ -146,6 +164,21 @@ public class MoviePlayer extends Application{
                   
             }
         });
+        
+        scene.widthProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+                System.out.println("width: "+ newSceneWidth);
+            }
+        });
+        scene.heightProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observanleValue, Number oldSceneHeight, Number newSceneHeight) {
+                System.out.println("height: "+ newSceneHeight);
+            }
+        });
+        
+        
         
         player.setAudioSpectrumListener(new AudioSpectrumListener() {
             @Override
