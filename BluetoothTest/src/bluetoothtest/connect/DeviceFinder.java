@@ -24,7 +24,7 @@ public class DeviceFinder {
     LocalDevice localDevice;
     DiscoveryAgent agent;
 
-    DeviceFinder() {
+    public DeviceFinder() {
         try {
             localDevice = LocalDevice.getLocalDevice();
             agent = localDevice.getDiscoveryAgent();
@@ -38,7 +38,7 @@ public class DeviceFinder {
         };
     }
 
-    private void initLocalDevice() {
+    public void initLocalDevice() {
         try {
             agent.startInquiry(DiscoveryAgent.GIAC, new MyDiscoveryListener());
             synchronized (lock) {

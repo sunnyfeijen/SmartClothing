@@ -5,6 +5,8 @@
  */
 package bluetoothtest;
 
+import bluetoothtest.connect.DeviceFinder;
+
 /**
  *
  * @author Sasa2905
@@ -15,7 +17,8 @@ public class BluetoothTest {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        DeviceFinder finder = new DeviceFinder();
+        finder.initLocalDevice();
     }
     
 }
