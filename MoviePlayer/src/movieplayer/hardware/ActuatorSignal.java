@@ -5,8 +5,6 @@
  */
 package movieplayer.hardware;
 
-import movieplayer.hardware.Actuator;
-
 /**
  *
  * @author Sasa2905
