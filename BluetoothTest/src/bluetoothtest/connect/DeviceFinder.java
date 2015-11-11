@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 import javax.bluetooth.BluetoothStateException;
 import javax.bluetooth.DiscoveryAgent;
 import javax.bluetooth.LocalDevice;
-import javax.bluetooth.UUID;
+import javax.bluetooth.RemoteDevice;
 
 /**
  *
@@ -26,6 +26,8 @@ public class DeviceFinder {
         try {
             localDevice = LocalDevice.getLocalDevice();
             agent = localDevice.getDiscoveryAgent();
+            RemoteDevice[] devices = agent.retrieveDevices(0);
+            System.out.println(devices.length);
         } catch (BluetoothStateException ex) {
             Logger.getLogger(DeviceFinder.class.getName()).log(Level.SEVERE, null, ex);
         }

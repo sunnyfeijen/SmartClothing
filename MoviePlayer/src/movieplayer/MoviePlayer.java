@@ -33,6 +33,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import movieplayer.output.ActuatorFile;
+import movieplayer.output.SerialCommunication;
 
 /**
  *
@@ -50,7 +51,8 @@ public class MoviePlayer extends Application{
     public void start(Stage stage) throws Exception {
         stage.setTitle("Movie Player"); 
         Group root = new Group(); 
-        
+        SerialCommunication s = new SerialCommunication();
+        s.initCommunication();
         Media media = new Media("file:///Users/Sunny/Desktop/Stage/NetbeansProjects/SmartClothing/MoviePlayer/trailers/tattoo.mp4");
         final MediaPlayer player = new MediaPlayer(media);
         MediaView view = new MediaView(player); 
