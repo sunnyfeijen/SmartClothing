@@ -35,10 +35,8 @@ void loop()
 //analogWrite(motorPin, 100);
 //delay(1000);
 
-analogWrite(motorPin,80);
-delay(50);
+analogWrite(motorPin,255);
+delay(300);
 analogWrite(motorPin, 0);
-analogWrite(motorPin2, 80);
-delay(50);
-analogWrite(motorPin2, 0);
+delay(1000);
 }
