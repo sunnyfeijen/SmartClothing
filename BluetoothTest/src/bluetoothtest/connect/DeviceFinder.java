@@ -18,8 +18,6 @@ import javax.bluetooth.UUID;
  */
 public class DeviceFinder {
 
-    UUID[] uuidSet = new UUID[1];
-
     public static Object lock = new Object();
     LocalDevice localDevice;
     DiscoveryAgent agent;
@@ -31,22 +29,16 @@ public class DeviceFinder {
         } catch (BluetoothStateException ex) {
             Logger.getLogger(DeviceFinder.class.getName()).log(Level.SEVERE, null, ex);
         }
-        uuidSet[0] = new UUID(
-                0x1105); //OBEX Object Push service
-        int[] attrIDs = new int[]{
-            0x0100 // Service name
-        };
     }
 
     public void initLocalDevice() {
         try {
-            agent.startInquiry(DiscoveryAgent.GIAC, new MyDiscoveryListener());
+            agent.startInquiry(DiscoveryAgent.GIAC, new MyDiscoveryListener(agent));
             synchronized (lock) {
                 lock.wait();
             }
         } catch (BluetoothStateException | InterruptedException ex) {
             Logger.getLogger(DeviceFinder.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 }

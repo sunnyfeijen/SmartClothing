@@ -8,11 +8,14 @@ package bluetoothtest.connect;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.bluetooth.BluetoothStateException;
 import javax.bluetooth.DataElement;
 import javax.bluetooth.DeviceClass;
+import javax.bluetooth.DiscoveryAgent;
 import javax.bluetooth.DiscoveryListener;
 import javax.bluetooth.RemoteDevice;
 import javax.bluetooth.ServiceRecord;
+import javax.bluetooth.UUID;
 
 /**
  *
@@ -20,7 +23,17 @@ import javax.bluetooth.ServiceRecord;
  */
 public class MyDiscoveryListener implements DiscoveryListener{
     
-    MyDiscoveryListener() {}
+    DiscoveryAgent agent;
+    UUID[] uuidSet = new UUID[1];
+    int[] attrIDs;
+    MyDiscoveryListener(DiscoveryAgent agent) {
+        this.agent = agent;
+        uuidSet[0] = new UUID(
+                0x1105); //OBEX Object Push service
+        attrIDs = new int[]{
+            0x0100 // Service name
+        };
+    }
     
     @Override
     public void deviceDiscovered(RemoteDevice btDevice, DeviceClass arg1) {
@@ -30,7 +43,11 @@ public class MyDiscoveryListener implements DiscoveryListener{
         } catch (Exception e) {
             name = btDevice.getBluetoothAddress();
         }
-        
+        try {
+            agent.searchServices(null, uuidSet, btDevice, this);
+        } catch (BluetoothStateException ex) {
+            Logger.getLogger(MyDiscoveryListener.class.getName()).log(Level.SEVERE, null, ex);
+        }
         System.out.println("device found: " + name);
         
     }
