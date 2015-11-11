@@ -1,4 +1,5 @@
 const int motorPin = 3;
+const int motorPin2 = 5;
 long currentTime = 0;
 long delayTime = 1000;
 long latestTime = 0;
@@ -6,7 +7,8 @@ int vibrationState = 1000;
 void setup()
 {
   Serial.begin(9600);
-pinMode(motorPin, OUTPUT);
+  pinMode(motorPin, OUTPUT);
+  pinMode(motorPin2, OUTPUT);
 }
 
 void loop()
@@ -33,6 +35,10 @@ void loop()
 //analogWrite(motorPin, 100);
 //delay(1000);
 
-analogWrite(motorPin,150);
-delay(100);
+analogWrite(motorPin,80);
+delay(50);
+analogWrite(motorPin, 0);
+analogWrite(motorPin2, 80);
+delay(50);
+analogWrite(motorPin2, 0);
 }
