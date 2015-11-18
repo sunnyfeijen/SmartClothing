@@ -8,8 +8,10 @@ package movieplayer.output;
 import com.fazecast.jSerialComm.SerialPort;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import movieplayer.hardware.ActuatorSignal;
 
 /**
  *
@@ -18,7 +20,13 @@ import java.util.logging.Logger;
 public class SerialCommunication {
 
     static SerialPort chosenPort;
-    public void initCommunication() {
+    PrintWriter writer;
+
+    public SerialCommunication() {
+        initCommunication();
+    }
+
+    private void initCommunication() {
         SerialPort[] portNames = SerialPort.getCommPorts();
         SerialPort chosenPort = null;
         System.out.println(portNames.length);
@@ -32,13 +40,15 @@ public class SerialCommunication {
             chosenPort.setComPortTimeouts(SerialPort.TIMEOUT_SCANNER, 0, 0);
             if (chosenPort.openPort()) {
                 System.out.println("Port opened");
-                try {
-                    ObjectOutputStream os = new ObjectOutputStream(chosenPort.getOutputStream());
-                    os.writeObject("Hallo g");
-                } catch (IOException ex) {
-                    Logger.getLogger(SerialCommunication.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                writer = new PrintWriter(chosenPort.getOutputStream());
             }
         }
+    }
+
+    public void sendSignal(ActuatorSignal signal) {
+        //System.out.println(signal.toString());
+        String sending = signal.toString();
+        writer.print(sending);
+        writer.flush();
     }
 }
